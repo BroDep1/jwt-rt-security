@@ -47,7 +47,7 @@ public class RefreshTokenService {
         for (RefreshToken existingToken : refreshTokenRepository.findAll()) {
             if (passwordEncoder.matches(oldRefreshToken, existingToken.getToken())) {
                 if (!getCurrentIp(httpServletRequest).equals(existingToken.getIp())){
-                    emailService.sendAlert();
+                    emailService.sendAlert(getCurrentIp(httpServletRequest));
                 }
                 User user = existingToken.getUser();
                 refreshTokenRepository.delete(existingToken);
